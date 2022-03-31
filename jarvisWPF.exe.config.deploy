@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <sectionGroup name="userSettings" type="System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <section name="jarvisWPF.Properties.InternalStrings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" allowExeDefinition="MachineToLocalUser" requirePermission="false" />
+      <section name="jarvisWPF.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" allowExeDefinition="MachineToLocalUser" requirePermission="false" />
+    </sectionGroup>
+    <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <section name="jarvisWPF.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    </sectionGroup>
+  </configSections>
+  <connectionStrings>
+    <add name="jarvisWPF.Properties.Settings.DB_OnGodday" connectionString="Provider=SQLNCLI11;Data Source=184.168.194.60;Persist Security Info=True;User ID=betaUsers;Initial Catalog=JARVIS_CONTRIBUTERS"
+      providerName="System.Data.OleDb" />
+    <add name="jarvisWPF.Properties.Settings.GrammarsConnectionString"
+      connectionString="Data Source=(LocalDB)\LINKS;AttachDbFilename=|DataDirectory|\DBs\_Grammars_v1.mdf;Integrated Security=True;MultipleActiveResultSets=True"
+      providerName="System.Data.SqlClient" />
+    <add name="jarvisWPF.Properties.Settings._Grammar_v1_ConnectionString"
+      connectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\DBs\_Grammar_v1.mdf;Integrated Security=True;Connect Timeout=30"
+      providerName="System.Data.SqlClient" />
+    <add name="DefaultConnection" connectionString="Data Source = |SQL/CE|" />
+  </connectionStrings>
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.6" />
+  </startup>
+  <userSettings>
+    <jarvisWPF.Properties.InternalStrings>
+      <setting name="SpeechWizard" serializeAs="String">
+        <value>Launching speech setup</value>
+      </setting>
+      <setting name="LoadingIntro" serializeAs="String">
+        <value>Loading intro</value>
+      </setting>
+      <setting name="LoadingInteface" serializeAs="String">
+        <value>Rendering main control center</value>
+      </setting>
+      <setting name="MicrophoneWizard" serializeAs="String">
+        <value>Launching microphone setup wizzard</value>
+      </setting>
+      <setting name="DatabaseInitialization" serializeAs="String">
+        <value>Initializing databases ... Establishing connection to satellite number [RandomNumber(50,100)]</value>
+      </setting>
+      <setting name="InitChecksCompleted" serializeAs="String">
+        <value>[PlaySound(Startup_Music)]Initial checks completed</value>
+      </setting>
+      <setting name="MainConfigBackup" serializeAs="String">
+        <value>Backing up the configuration</value>
+      </setting>
+      <setting name="OnlineAndReady" serializeAs="String">
+        <value>I am online and ready</value>
+      </setting>
+      <setting name="LoadingAudioVideoFiles" serializeAs="String">
+        <value>Gathering audio and video files</value>
+      </setting>
+      <setting name="NoAudioFiles" serializeAs="String">
+        <value>No music files found in the specified music directory</value>
+      </setting>
+      <setting name="NoVideoFiles" serializeAs="String">
+        <value>No video files found in the specified video directory</value>
+      </setting>
+      <setting name="NoMediaFiles" serializeAs="String">
+        <value>No files found in the specified music and video directories</value>
+      </setting>
+      <setting name="MediaLibraryUpdated" serializeAs="String">
+        <value>Media libraries have been updated</value>
+      </setting>
+      <setting name="LoadingMediaError" serializeAs="String">
+        <value>I may need to be restarted in order to access music files</value>
+      </setting>
+      <setting name="OnEnd" serializeAs="String">
+        <value>Farewell;Goodbye</value>
+      </setting>
+      <setting name="LoadingPlugins" serializeAs="String">
+        <value>Loading custom components</value>
+      </setting>
+      <setting name="ConfirmEnd" serializeAs="String">
+        <value>Do you want to execute the A-I shutdown protocol?</value>
+      </setting>
+      <setting name="OnDenyEnd" serializeAs="String">
+        <value>Aborting shut down sequence;As you wish</value>
+      </setting>
+      <setting name="Sir" serializeAs="String">
+        <value>Sir</value>
+      </setting>
+      <setting name="Madam" serializeAs="String">
+        <value>Miss</value>
+      </setting>
+      <setting name="PlayAudioVideoCommand" serializeAs="String">
+        <value>[get_AIName], [play me a/play a] [song/video/movie]</value>
+      </setting>
+      <setting name="ShutdownSequence" serializeAs="String">
+        <value>starting application shut down sequence</value>
+      </setting>
+      <setting name="ComandConfirmation_Negative" serializeAs="String">
+        <value>As you wish;Execution declined</value>
+      </setting>
+      <setting name="MoveWindowResponse" serializeAs="String">
+        <value>Here you go;How is that;ok;sure</value>
+      </setting>
+      <setting name="OnStopListening" serializeAs="String">
+        <value>I will await further commands</value>
+      </setting>
+      <setting name="OnStartListening" serializeAs="String">
+        <value>Online and ready</value>
+      </setting>
+      <setting name="StartListening" serializeAs="String">
+        <value>jarvis, come back online</value>
+      </setting>
+      <setting name="ResponseOnCallingAIName" serializeAs="String">
+        <value>Yes [Get_SirORMadam];Yes;How may I help?;How may I be of assistance?;How can i assist you [Get_SirORMadam]</value>
+      </setting>
+    </jarvisWPF.Properties.InternalStrings>
+    <jarvisWPF.Properties.Settings>
+      <setting name="Alarm" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="AClockEnbl" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="Temperature" serializeAs="String">
+        <value>f</value>
+      </setting>
+      <setting name="VideoFolder" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="MusicFolder" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="GmailUser" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="GmailPassword" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="UserDocuments" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="Language" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="User" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="WOEID" serializeAs="String">
+        <value>2442047</value>
+      </setting>
+      <setting name="MainWindowFactorSize" serializeAs="String">
+        <value>0.000898</value>
+      </setting>
+      <setting name="ImapServer" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="AIName_Spaced" serializeAs="String">
+        <value>L I N K S </value>
+      </setting>
+      <setting name="Confidence" serializeAs="String">
+        <value>0.7</value>
+      </setting>
+      <setting name="playIntroVid" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="searchEngine" serializeAs="String">
+        <value>Google</value>
+      </setting>
+      <setting name="jarvisPassword" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="PicturesFolder" serializeAs="String">
+        <value>DISABLED</value>
+      </setting>
+      <setting name="runOnce" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="IdleFirstRun" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="atomFeed" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="RenderingQuality" serializeAs="String">
+        <value>0</value>
+      </setting>
+      <setting name="BGOpacity" serializeAs="String">
+        <value>0.09</value>
+      </setting>
+      <setting name="searchKW" serializeAs="String">
+        <value>please look for</value>
+      </setting>
+      <setting name="StopListningOnSpeech" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="FirstRun" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="betaUserID" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="idAccepted" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="DatabaseLocation" serializeAs="String">
+        <value>null</value>
+      </setting>
+      <setting name="ConfigProtected" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="stayLoggedIn" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="newsSource" serializeAs="String">
+        <value>NPR</value>
+      </setting>
+      <setting name="newsArticleNum" serializeAs="String">
+        <value>2</value>
+      </setting>
+      <setting name="currentProfile" serializeAs="String">
+        <value>main</value>
+      </setting>
+      <setting name="mORf" serializeAs="String">
+        <value>m</value>
+      </setting>
+      <setting name="MusicPlayer" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="MusicPlayerPath" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="MusicPlayers" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="LastBrowsePath" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="SoundEffectsOn" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="SoundEffectsVolume" serializeAs="String">
+        <value>0.2</value>
+      </setting>
+      <setting name="SpeechVolume" serializeAs="String">
+        <value>80</value>
+      </setting>
+      <setting name="IMAPServerPort" serializeAs="String">
+        <value>993</value>
+      </setting>
+      <setting name="OptionsSpeech" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="introFullScreen" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="weatherOnStartUp" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="SqlLocalDBExe" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="SirORMadam" serializeAs="String">
+        <value>sir</value>
+      </setting>
+      <setting name="RunOnStartUP" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="AIName" serializeAs="String">
+        <value>LINKS</value>
+      </setting>
+      <setting name="CommandComfirmation_Timeout" serializeAs="String">
+        <value>12</value>
+      </setting>
+      <setting name="PersistedBackgroundAdaptation" serializeAs="String">
+        <value>0</value>
+      </setting>
+      <setting name="HighConfidenceThreshold" serializeAs="String">
+        <value>85</value>
+      </setting>
+      <setting name="NormalConfidenceThreshold" serializeAs="String">
+        <value>60</value>
+      </setting>
+      <setting name="LowConfidenceThreshold" serializeAs="String">
+        <value>30</value>
+      </setting>
+      <setting name="AdaptationOn" serializeAs="String">
+        <value>1</value>
+      </setting>
+      <setting name="SpeechVoice" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="CFGConfidenceRejectionThreshold" serializeAs="String">
+        <value>50</value>
+      </setting>
+      <setting name="VideoFolderCheck" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="MusicFolderCheck" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="PicturesFolderCheck" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="ActionServerPort" serializeAs="String">
+        <value>54657</value>
+      </setting>
+      <setting name="EnableWebAccess" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="WebAccessKey" serializeAs="String">
+        <value>ABC1234</value>
+      </setting>
+      <setting name="StartListeningConfidenceTreshold" serializeAs="String">
+        <value>0.94</value>
+      </setting>
+      <setting name="EnableVoiceMeter" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="PushToTalk" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="AutoResetRecognizerTime" serializeAs="String">
+        <value>160</value>
+      </setting>
+      <setting name="AutoResetRecognizer" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="AutoSleepRecognizer" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="AutoSleepRecognizerTimeout" serializeAs="String">
+        <value>15</value>
+      </setting>
+      <setting name="InitialSilenceTimeout" serializeAs="String">
+        <value>1</value>
+      </setting>
+      <setting name="BabbleTimeout" serializeAs="String">
+        <value>1</value>
+      </setting>
+      <setting name="EndSilenceTimeout" serializeAs="String">
+        <value>0.7</value>
+      </setting>
+      <setting name="EndSilenceTimeoutAmbiguous" serializeAs="String">
+        <value>0.9</value>
+      </setting>
+      <setting name="HideOnStartup" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="Trace" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="NormalizeSpeechVolume" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="SpeechRate" serializeAs="String">
+        <value>0</value>
+      </setting>
+      <setting name="SpeechEmphasis" serializeAs="String">
+        <value>0</value>
+      </setting>
+      <setting name="UpdateOnStartup" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="LINKSSharedDirectory" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="ControlCenterTop" serializeAs="String">
+        <value>0</value>
+      </setting>
+      <setting name="ControlCenterLeft" serializeAs="String">
+        <value>0</value>
+      </setting>
+    </jarvisWPF.Properties.Settings>
+  </userSettings>
+  <applicationSettings>
+    <jarvisWPF.Properties.Settings>
+      <setting name="Title" serializeAs="String">
+        <value>LINKS</value>
+      </setting>
+      <setting name="ReleaseDate" serializeAs="String">
+        <value>2016-04-30</value>
+      </setting>
+    </jarvisWPF.Properties.Settings>
+  </applicationSettings>
+</configuration>
