@@ -1,0 +1,398 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Xml;
+using System.Xml.Linq;
+using MSXML;
+using Newtonsoft.Json;
+
+namespace LINKS
+{
+    /// Make sure the function called from host is static
+    /// params can only be string, convert them in the method
+    /// Methods are not case sensitive
+    /// Call example from jarvis response:
+    /// 
+
+    public static class LWeather
+    {
+        private static string temperature;
+        private static string condition;
+        private static string humidity;
+        private static string windSpeed;
+        private static string town;
+        private static string forcastCondition;
+        private static string forecastHigh;
+        private static string forecastLow;
+        private static string temperatureUnit;
+
+        private static YWeather.RootObject weather;
+
+        public static string GetWeather(string place, string tempUnit)
+        {
+            string retVal = "-1";
+            string responseText = "-1";
+            tempUnit = tempUnit.ToUpper();
+            //Uri request = new Uri("https://developer.yahoo.com/yql/console/?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys#h=select+*+from+weather.forecast+where+woeid+in+(select+woeid+from+geo.places(1)+where+text%3D%2219136%22)+and+u%3D%22C%22");
+            Uri request = new Uri("https://" + "query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22" + place + "%22)%20and%20u%3D%22" + tempUnit + "%22&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
+            //request = new Uri("https://developer.yahoo.com/yql/console/?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys#h=select+*+from+weather.forecast+where+woeid+in+(select+woeid+from+geo.places(1)+where+text%3D%2219136%22)+and+u%3D%22C%22");
+            XMLHTTPRequest HTTPRequest = new XMLHTTPRequest();
+
+            HTTPRequest.open("GET", request.AbsoluteUri, false);
+            HTTPRequest.send();
+            responseText = HTTPRequest.responseText;
+
+            
+            try
+            {
+                YWeather.RootObject weather = JsonConvert.DeserializeObject<YWeather.RootObject>(responseText);
+
+                weather = new YWeather.RootObject();
+                Town = weather.query.results.channel.location.city;
+                ForecastHigh = weather.query.results.channel.item.forecast[0].high;
+                ForecastLow = weather.query.results.channel.item.forecast[0].low;
+                ForcastCondition = weather.query.results.channel.item.forecast[0].text;
+
+                Temperature = weather.query.results.channel.item.condition.temp;
+                Condition = weather.query.results.channel.item.condition.code;
+                Humidity = weather.query.results.channel.atmosphere.humidity;
+                WindSpeed = weather.query.results.channel.wind.speed;
+
+                TemperatureUnit = tempUnit == "C" ? "Celsius" : "Fahrenheit";
+                ForcastCondition = ForcastCondition.Replace("-", "minus ");
+                ForecastHigh = ForecastHigh.Replace("-", "minus ");
+                ForecastLow = ForecastLow.Replace("-", "minus ");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;
+        }
+
+        public static string LoadWeather(string WOEID, string TempUnit)
+        {
+            
+            try
+            {
+                //string query = string.Format("http://weather.yahooapis.com/forecastrss?w=" + WOEID + "&u=" + TempUnit);
+                string q = string.Format("https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid=\"{0}\" and u=\"{1}\"&format=xml", WOEID, TempUnit);
+                bool WeatherDown = true;
+
+                Uri query = new Uri(q);
+                XmlDocument wData = jarvisWPF.PublicClass.GetXML(query);
+                XmlNamespaceManager man = new XmlNamespaceManager(wData.NameTable);
+
+                man.AddNamespace("yweather", "http://xml.weather.yahoo.com/ns/rss/1.0");
+                XmlNode channel = wData.SelectSingleNode("/query[1]/results[1]/channel[1]");
+                XmlNodeList nodes = wData.SelectNodes("/query/results/channel/item/yweather:forecast", man);
+                if (nodes.Count != 0)
+                {
+                    Temperature = channel.SelectSingleNode("item").SelectSingleNode("yweather:condition", man).Attributes["temp"].Value;
+                    Condition = channel.SelectSingleNode("item").SelectSingleNode("yweather:condition", man).Attributes["text"].Value;
+                    Humidity = channel.SelectSingleNode("yweather:atmosphere", man).Attributes["humidity"].Value;
+                    WindSpeed = channel.SelectSingleNode("yweather:wind", man).Attributes["speed"].Value;
+                    Town = channel.SelectSingleNode("yweather:location", man).Attributes["city"].Value;
+                    ForcastCondition = channel.SelectSingleNode("item").SelectSingleNode("yweather:forecast", man).Attributes["text"].Value;
+                    ForecastHigh = channel.SelectSingleNode("item").SelectSingleNode("yweather:forecast", man).Attributes["high"].Value;
+                    ForecastLow = channel.SelectSingleNode("item").SelectSingleNode("yweather:forecast", man).Attributes["low"].Value;
+                    ForecastHigh = ForecastHigh.Replace("-", "minus ");
+                    ForecastLow = ForecastLow.Replace("-", "minus ");
+                    WeatherDown = false;
+                }
+                else
+                {
+                    WeatherDown = true;
+                }
+
+                return "";
+            }
+            catch (Exception error)
+            {
+                return error.Message;
+            }
+        }
+
+        public static string Temperature
+        {
+            get
+            {
+                return temperature;
+            }
+
+            set
+            {
+                temperature = value;
+            }
+        }
+
+        public static string Condition
+        {
+            get
+            {
+                return condition;
+            }
+
+            set
+            {
+                condition = value;
+            }
+        }
+
+        public static string Humidity
+        {
+            get
+            {
+                return humidity;
+            }
+
+            set
+            {
+                humidity = value;
+            }
+        }
+
+        public static string WindSpeed
+        {
+            get
+            {
+                return windSpeed;
+            }
+
+            set
+            {
+                windSpeed = value;
+            }
+        }
+
+        public static string Town
+        {
+            get
+            {
+                return town;
+            }
+
+            set
+            {
+                town = value;
+            }
+        }
+
+        public static string ForcastCondition
+        {
+            get
+            {
+                return forcastCondition;
+            }
+
+            set
+            {
+                forcastCondition = value;
+            }
+        }
+
+        public static string ForecastHigh
+        {
+            get
+            {
+                return forecastHigh;
+            }
+
+            set
+            {
+                forecastHigh = value;
+            }
+        }
+
+        public static string ForecastLow
+        {
+            get
+            {
+                return forecastLow;
+            }
+
+            set
+            {
+                forecastLow = value;
+            }
+        }
+
+        public static string TemperatureUnit
+        {
+            get
+            {
+                return temperatureUnit;
+            }
+
+            set
+            {
+                temperatureUnit = value;
+            }
+        }
+
+        public static XmlDocument GetXML(string url)
+        {
+            var webClient = new WebClient();
+
+            string result = webClient.DownloadString(url);
+
+            XDocument document = XDocument.Parse(result);
+            document.DescendantNodes();
+            XmlReader r = document.CreateReader();
+            r.Read();
+            var x = new XmlDocument();
+            x.LoadXml(r.ReadOuterXml());
+
+            return x;
+        }
+    }
+
+    public class YWeather
+    {
+        public class Url
+        {
+            public string __invalid_name__execution_start_time { get; set; }
+            public string __invalid_name__execution_stop_time { get; set; }
+            public string __invalid_name__execution_time { get; set; }
+            public string content { get; set; }
+        }
+
+        public class Javascript
+        {
+            public string __invalid_name__execution_start_time { get; set; }
+            public string __invalid_name__execution_stop_time { get; set; }
+            public string __invalid_name__execution_time { get; set; }
+            public string __invalid_name__instructions_used { get; set; }
+            public string __invalid_name__table_name { get; set; }
+        }
+
+        public class Diagnostics
+        {
+            public string publiclyCallable { get; set; }
+            public List<Url> url { get; set; }
+            public Javascript javascript { get; set; }
+            public string __invalid_name__user_time { get; set; }
+            public string __invalid_name__service_time { get; set; }
+            public string __invalid_name__build_version { get; set; }
+        }
+
+        public class Units
+        {
+            public string distance { get; set; }
+            public string pressure { get; set; }
+            public string speed { get; set; }
+            public string temperature { get; set; }
+        }
+
+        public class Location
+        {
+            public string city { get; set; }
+            public string country { get; set; }
+            public string region { get; set; }
+        }
+
+        public class Wind
+        {
+            public string chill { get; set; }
+            public string direction { get; set; }
+            public string speed { get; set; }
+        }
+
+        public class Atmosphere
+        {
+            public string humidity { get; set; }
+            public string pressure { get; set; }
+            public string rising { get; set; }
+            public string visibility { get; set; }
+        }
+
+        public class Astronomy
+        {
+            public string sunrise { get; set; }
+            public string sunset { get; set; }
+        }
+
+        public class Image
+        {
+            public string title { get; set; }
+            public string width { get; set; }
+            public string height { get; set; }
+            public string link { get; set; }
+            public string url { get; set; }
+        }
+
+        public class Condition
+        {
+            public string code { get; set; }
+            public string date { get; set; }
+            public string temp { get; set; }
+            public string text { get; set; }
+        }
+
+        public class Forecast
+        {
+            public string code { get; set; }
+            public string date { get; set; }
+            public string day { get; set; }
+            public string high { get; set; }
+            public string low { get; set; }
+            public string text { get; set; }
+        }
+
+        public class Guid
+        {
+            public string isPermaLink { get; set; }
+        }
+
+        public class Item
+        {
+            public string title { get; set; }
+            public string lat { get; set; }
+            public string @long { get; set; }
+            public string link { get; set; }
+            public string pubDate { get; set; }
+            public Condition condition { get; set; }
+            public List<Forecast> forecast { get; set; }
+            public string description { get; set; }
+            public Guid guid { get; set; }
+        }
+
+        public class Channel
+        {
+            public Units units { get; set; }
+            public string title { get; set; }
+            public string link { get; set; }
+            public string description { get; set; }
+            public string language { get; set; }
+            public string lastBuildDate { get; set; }
+            public string ttl { get; set; }
+            public Location location { get; set; }
+            public Wind wind { get; set; }
+            public Atmosphere atmosphere { get; set; }
+            public Astronomy astronomy { get; set; }
+            public Image image { get; set; }
+            public Item item { get; set; }
+        }
+
+        public class Results
+        {
+            public Channel channel { get; set; }
+        }
+
+        public class Query
+        {
+            public int count { get; set; }
+            public string created { get; set; }
+            public string lang { get; set; }
+            public Diagnostics diagnostics { get; set; }
+            public Results results { get; set; }
+        }
+
+        public class RootObject
+        {
+            public Query query { get; set; }
+
+        }
+    }
+
+}
