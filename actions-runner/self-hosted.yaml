@@ -1,0 +1,24 @@
+# github.com@v2-with_api_access
+# Create runner start the configuration experience
+Jobs: 
+ Name: configure workflow runner
+  Runs-on: self-hosted 
+   Command: $ ./config.cmd --url https://github.com/zachwylde00/jarvis --token AKLXJUQFYKSRMTW4MPMEOGTCVNIZ4# Run it!
+            $ ./run.cmd
+
+# Using self-hosted runner
+# create this YAML in workflow file= https://github.com/zachwylde00/jarvis/actions-runner/actions-runnerfor each job
+Jobs:
+ name: create self-hosted runner
+  Uses: windows x64
+   runs-on: self-hosted
+
+# Create a folder under the drive root
+    Command: $ mkdir actions-runner; cd actions-runner
+# Download the latest runner package
+    command: $ Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v2.293.0/actions-runner-win-x64-2.293.0.zip -OutFile actions-runner-win-x64-2.293.0.zip
+# Optional: Validate the hash
+    Command: $ if((Get-FileHash -Path actions-runner-win-x64-2.293.0.zip -Algorithm SHA256).Hash.ToUpper() -ne 'ae421f582b08cd7f8521c46991fc80685b643402fe3822eae2da23430819fb8b'.ToUpper()){ throw 'Computed checksum did not match' }
+# Extract the installer
+    Command: $ Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD/actions-runner-win-x64-2.293.0.zip", "$PWD")
+
